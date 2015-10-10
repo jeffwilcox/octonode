@@ -124,8 +124,13 @@ class Org
 
   # Add an organisation team repository
   # '/teams/37/repos/flatiron/hub' PUT
-  addTeamRepo: (team, repo, cb) ->
-    @client.put "/teams/#{team}/repos/#{@name}/#{repo}", null, (err, s, b, h) ->
+  addTeamRepo: (team, repo, cbOrOptions, cb) ->
+    if !cb? and cbOrOptions
+      cb = cbOrOptions
+      param = {}
+    else if typeof cbOrOptions is 'object'
+      param = cbOrOptions
+    @client.put "/teams/#{team}/repos/#{@name}/#{repo}", param, (err, s, b, h) ->
       return cb(err)  if err
       if s isnt 204 then cb(new Error('Org addTeamRepo error')) else cb null, b, h
 
