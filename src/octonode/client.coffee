@@ -186,18 +186,13 @@ class Client
       @errorHandle res, body, callback
 
   # Github api PUT request
-  put: (path, content, cbOrOptions, callback) ->
-    if !callback and cbOrOptions
-      callback = cbOrOptions
-      options =
-        'Content-Type': 'application/json'
-    else if typeof cbOrOptions is 'object'
-      options = cbOrOptions
+  put: (path, content, callback) ->
     @request @requestOptions(
       uri: @buildUrl path
       method: 'PUT'
       body: JSON.stringify content
-      headers: options
+      headers:
+        'Content-Type': 'application/json'
     ), (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
