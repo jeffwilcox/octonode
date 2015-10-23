@@ -32,7 +32,6 @@ class Repo
       @hasCollaborator cbOrUser, cb
     else
       cb = cbOrUser
-      # @client.getOptions "/repos/#{@name}/collaborators", { headers: { Accept: 'application/vnd.github.ironman-preview+json'} }, params..., (err, s, b, h)  ->
       @client.getOptions "/repos/#{@name}/collaborators", { headers: { Accept: 'application/vnd.github.ironman-preview+json'} }, (err, s, b, h)  ->
         return cb(err) if err
         if s isnt 200 then cb(new Error("Repo collaborators error")) else cb null, b, h
